@@ -1,0 +1,144 @@
+html {
+    font-size: 100%;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Fredericka the Great;
+}
+
+body {
+    line-height: 1.5;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    color: black;
+    background: #d9dadc;
+    width: 318px;
+    height: 295px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border: 5px solid;
+    border-radius: 3px;
+    border-color: #708198;
+}
+
+h3 {
+    text-align: center;
+}
+
+p {
+    margin: 1em 0;
+}
+
+pre {
+    padding: 0px;
+    border: 0px;
+    border-radius: 0px;
+}
+
+red {
+    color: red;
+}
+
+a {
+    color: #337ab7;
+}
+
+p {
+    margin-top: 1rem;
+}
+
+a:hover {
+    color: #23527c;
+}
+
+a:visited {
+    color: #8d75a3;
+}
+
+#controls {
+    display: flex;
+    margin-top: 2rem;
+}
+
+button {
+    height: 2rem;
+    border: none;
+    border-radius: 0.15rem;
+    background: #ed341d;
+    margin-left: 15px;
+    margin-right: 15px;
+    box-shadow: inset 0 -0.15rem 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+button:hover,
+button:focus {
+    outline: none;
+    background: #c72d1c;
+}
+
+button::-moz-focus-inner {
+    border: 0;
+}
+
+button:active {
+    box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.2);
+    line-height: 3rem;
+}
+
+button:disabled {
+    pointer-events: none;
+    background: lightgray;
+}
+
+audio {
+    display: block;
+    width: 100%;
+    margin-top: 0.2rem;
+}
+
+#recordingsList {
+    align-items: center;
+}
+
+#recordButton {
+    width: 114px;
+    margin-left: 28px;
+}
+
+#stopButton {
+    width: 114px;
+    margin-left: 5px;
+}
+
+#save-btn {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 10px;
+    background-color: #708198;
+}
+
+.deleteBtn {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 10px;
+    background-color: #67605f;
+    color: #fff;
+}
+
+#stopwatch {
+    text-align: center;
+    font-size: 1.5rem;
+}

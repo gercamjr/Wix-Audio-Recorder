@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>JS Recorder</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/0955c01d8d.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background: #d9dadc;
+            width: 318px;
+            height: 295px;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            border: 5px solid;
+            border-radius: 3px;
+            border-color: #708198;
+        }
+        
+        .container {
+            padding-top: 10px;
+            padding-left: 0px;
+            padding-right: 0px;
+            background-color: #d9dadc;
+            margin: 0;
+        }
+        
+        .fa-circle,
+        .fa-pause,
+        .fa-square {
+            color: #67605f;
+        }
+        
+        #player {
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        #save-btn {
+            width: 100%;
+            margin: 0 auto;
+            background-color: #708198;
+        }
+        
+        .deleteBtn {
+            width: 100%;
+            margin: 0 auto;
+            background-color: #67605f;
+            color: #fff;
+        }
+        
+        .visualizer {
+            height: 60px;
+            width: 100%;
+        }
+        
+        #resumeBtn {
+            display: none;
+            color: #67605f;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <div id="recorderContainer" class="container rounded mh-100">
+        <div id="buttonLabels" class="row align-items-center">
+            <div id="recordLabel" class="col-sm col-4 text-center">
+                <h6>Record</h6>
+            </div>
+            <div id="pauseLabel" class="col-sm col-4 text-center">
+                <h6>Pause</h6>
+            </div>
+            <div id="stopLabel" class="col-sm col-4 text-center">
+                <h6>Stop</h6>
+            </div>
+        </div>
+        <div id="recorderButtons" class="row align-items-center">
+            <div class="col-sm col-4 text-center">
+                <button id="record" class='btn'>
+                <span class="fa-stack">
+                    
+                        <i class="fas fa-circle fa-stack-2x"></i></i>
+                        <i class="fas fa-microphone fa-stack-1x fa-inverse" ></i>
+                   
+                </span>
+            </button>
+            </div>
+            <div class="col-sm col-4 text-center">
+                <button id="pause" class='btn'>
+                <i class="fas fa-pause fa-2x"></i>
+                </button>
+
+            </div>
+            <div class="col-sm col-4 text-center">
+                <button id="stop" class='btn'>
+                <i class="fas fa-square fa-2x"></i>
+            </button>
+            </div>
+        </div>
+        <div id="playback" class="row align-items-center">
+            <div id="player" class="col-sm col-12 ">
+                <canvas class="visualizer">
+
+                </canvas>
+                <section class="sound-clips">
+
+                </section>
+            </div>
+        </div>
+        <div id="saveAudio" class="row align-items-center">
+            <div id="saver" class="col-sm col-12">
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://rawcdn.githack.com/albert-gonzalez/easytimer.js/153c4c4d2d88a9c3db8dd5a112d1247b8f0ab39f/dist/easytimer.min.js"></script>
+    <script>
+        const record = document.getElementById('record');
+        const stop = document.getElementById('stop');
+        const pause = document.getElementById('pause');
+        const canvas = document.querySelector('.visualizer');
+
+        const soundClips = document.querySelector('.sound-clips');
+
+        stop.disabled = true;
+        pause.disabled = true;
+
+
+
+        let audioCtx;
+        const canvasCtx = canvas.getContext('2d');
+
+        //main block for audio recording
+
+        if (navigator.mediaDevices) {
+            console.log("getUserMedia supported.");
+
+            var constraints = {
+                audio: true,
+                video: false
+            };
+            var chunks = [];
+
+            navigator.mediaDevices.getUserMedia(constraints)
+                .then(function(stream) {
+                    var mediaRecorder = new MediaRecorder(stream);
+
+                    visualize(stream);
+
+                    record.onclick = function() {
+                        mediaRecorder.start();
+                        console.log(mediaRecorder.state);
+                        console.log("recorder started");
+                        document.querySelector(".fas.fa-square.fa-2x").style.color = "red";
+
+                        stop.disabled = false;
+                        pause.disabled = false;
+                        record.disabled = true;
+                        //record.onclick = null;
+                    }
+
+                    pause.onclick = function() {
+                        if (mediaRecorder.state !== "paused") {
+                            mediaRecorder.pause();
+                            console.log(mediaRecorder.state);
+                            console.log("recorder paused");
+                            pause.innerHTML = "<h5>Resume</h5>"
+                        } else {
+                            mediaRecorder.resume();
+                            console.log(mediaRecorder.state);
+                            console.log("recorder resumed");
+                            pause.innerHTML = "<i class='fas fa-pause fa-2x'></i>";
+                        }
+                    }
+
+                    stop.onclick = function() {
+                        if (mediaRecorder.state !== "inactive") {
+                            pause.innerHTML = "<i class='fas fa-pause fa-2x'></i>";
+                            mediaRecorder.stop();
+                            console.log(mediaRecorder.state);
+                            console.log("recorder stopped");
+                            document.querySelector(".fas.fa-square.fa-2x").style.color = "#67605f";
+
+                            pause.disabled = true;
+                            stop.disabled = true;
+                            record.disabled = false;
+                        }
+
+                    }
+
+                    mediaRecorder.onstop = function(e) {
+                        console.log("data available after MediaRecorder.stop() called.");
+
+                        var clipContainer = document.createElement('article');
+                        var clipName = new Date().toISOString() + "_Legacy Audio Recording.mp4";
+
+                        var audio = document.createElement('audio');
+                        var deleteButton = document.createElement('button');
+
+
+                        clipContainer.classList.add('clip');
+                        audio.setAttribute('controls', '');
+                        deleteButton.classList.add('btn');
+                        deleteButton.classList.add('deleteBtn');
+
+                        deleteButton.innerHTML = "Delete";
+
+
+                        clipContainer.appendChild(audio);
+
+                        clipContainer.appendChild(deleteButton);
+                        soundClips.appendChild(clipContainer);
+
+                        audio.controls = true;
+                        var blob = new Blob(chunks, {
+                            'type': "audio/mp4"
+                        });
+                        chunks = [];
+                        var audioURL = URL.createObjectURL(blob);
+                        audio.src = audioURL;
+                        console.log("recorder stopped");
+
+                        var link = document.createElement('a');
+                        link.id = "savingLink";
+                        link.href = audioURL;
+                        link.download = clipName;
+                        link.innerHTML = "<button id='save-btn' class='btn'>Save Audio</button>";
+                        document.getElementById("saver").appendChild(link);
+
+                        deleteButton.onclick = function(e) {
+                            let evtTgt = e.target;
+                            evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
+                            document.getElementById("saver").removeChild(document.getElementById("savingLink"));
+                        }
+                    }
+
+                    mediaRecorder.ondataavailable = function(e) {
+                        chunks.push(e.data);
+                    }
+                })
+                .catch(function(error) {
+                    console.log('The following error ocurred: ' + error.message);
+                });
+
+        }
+
+        function visualize(stream) {
+            if (!audioCtx) {
+                audioCtx = new AudioContext();
+            }
+
+            const source = audioCtx.createMediaStreamSource(stream);
+
+            const analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 2048;
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+
+            source.connect(analyser);
+            //analyser.connect(audioCtx.destination);
+
+            draw()
+
+            function draw() {
+                const WIDTH = canvas.width
+                const HEIGHT = canvas.height;
+
+                requestAnimationFrame(draw);
+
+                analyser.getByteTimeDomainData(dataArray);
+
+                canvasCtx.fillStyle = 'rgb(200, 200, 200)';
+                canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+
+                canvasCtx.lineWidth = 2;
+                canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
+
+                canvasCtx.beginPath();
+
+                let sliceWidth = WIDTH * 1.0 / bufferLength;
+                let x = 0;
+
+
+                for (let i = 0; i < bufferLength; i++) {
+
+                    let v = dataArray[i] / 128.0;
+                    let y = v * HEIGHT / 2;
+
+                    if (i === 0) {
+                        canvasCtx.moveTo(x, y);
+                    } else {
+                        canvasCtx.lineTo(x, y);
+                    }
+
+                    x += sliceWidth;
+                }
+
+                canvasCtx.lineTo(canvas.width, canvas.height / 2);
+                canvasCtx.stroke();
+
+            }
+        }
+
+        window.onresize = function() {
+            canvas.width = player.offsetWidth;
+        }
+
+        window.onresize();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+</body>
+
+</html>
