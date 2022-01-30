@@ -22,15 +22,26 @@ var audioContext; //new audio context to help us record
 var encodingTypeSelect = document.getElementById("encodingTypeSelect");
 var recordButton = document.getElementById("recordButton");
 var stopButton = document.getElementById("stopButton");
+var deleteButton = document.getElementById('deleteButton');
+const micSVG = document.getElementById("micIcon");
+
 
 //add events to those 2 buttons
 recordButton.addEventListener("click", startRecording);
 stopButton.addEventListener("click", stopRecording);
+stopButton.disabled = true;
+stopButton.style.cursor = "not-allowed";
+deleteButton.disabled = true;
+
 
 //const canvasCtx = canvas.getContext('2d');
 
 function startRecording() {
     console.log("startRecording() called");
+    micSVG.style.fill = "#ff4040";
+    recordButton.style.backgroundColor = "transparent";
+    recordButton.style.cursor = "not-allowed";
+    
 
     /*
     	Simple constraints object, for more advanced features see
@@ -68,7 +79,7 @@ function startRecording() {
 
         //disable the encoding selector
 
-
+        startTimer();
         recorder = new WebAudioRecorder(input, {
             workerDir: "js/", // must end with slash
             encoding: encodingType,
@@ -82,7 +93,7 @@ function startRecording() {
 
             }
         });
-        startTimer();
+
         recorder.onComplete = function(recorder, blob) {
 
             createDownloadLink(blob, recorder.encoding);
@@ -90,10 +101,10 @@ function startRecording() {
         }
 
         recorder.setOptions({
-            timeLimit: 120,
+            timeLimit: 600,
             encodeAfterRecord: encodeAfterRecord,
             ogg: { quality: 0.5 },
-            mp3: { bitRate: 160 }
+            mp3: { bitRate: 128 }
         });
 
 
@@ -103,6 +114,7 @@ function startRecording() {
 
     }).catch(function(err) {
         //enable the record button if getUSerMedia() fails
+        console.log("we could not get the user media! " + err.message);
         recordButton.disabled = false;
         stopButton.disabled = true;
 
@@ -111,6 +123,10 @@ function startRecording() {
     //disable the record button
     recordButton.disabled = true;
     stopButton.disabled = false;
+    stopButton.style.cursor = "pointer";
+    stopButton.style.backgroundColor = "#ff4040";
+    stopButton.style.color = "#fff";
+    
 }
 
 function stopRecording() {
@@ -118,10 +134,18 @@ function stopRecording() {
     stopTimer();
     //stop microphone access
     gumStream.getAudioTracks()[0].stop();
+    
+    deleteButton.disabled = false;
 
     //disable the stop button
     stopButton.disabled = true;
     recordButton.disabled = false;
+    recordButton.style.cursor = "pointer";
+    stopButton.style.cursor = "not-allowed";
+    stopButton.style.backgroundColor = "transparent";
+    stopButton.style.color = "#ff4040"
+    recordButton.style.backgroundColor = "#ff4040";
+        micSVG.style.fill = "#fff";
 
     //tell the recorder to finish the recording (stop recording + encode the recorded audio)
     recorder.finishRecording();
@@ -132,36 +156,41 @@ function createDownloadLink(blob, encoding) {
 
     var url = URL.createObjectURL(blob);
     var au = document.createElement('audio');
-    var li = document.createElement('div');
     var link = document.createElement('a');
-    var deleteButton = document.createElement('button');
-    deleteButton.classList.add('btn');
-    deleteButton.classList.add('deleteBtn');
+    
+    const saveDiv = document.getElementById('saveAudio');
+    // deleteButton.classList.add('btn');
+    // deleteButton.classList.add('deleteBtn');
 
-    deleteButton.innerHTML = "Delete";
+    //deleteButton.innerHTML = "Delete";
 
     //add controls to the <audio> element
     au.controls = true;
     au.src = url;
+    au.classList.add('recorder__player--audio');
 
     //link the a element to the blob
     link.href = url;
-    link.download = new Date().toISOString() + '_Legacy_Audio_Recording.' + encoding;
-    link.innerHTML = "<button id='save-btn' class='btn'>Save Audio</button>";
+    link.download = 'Vault of Us Recording_' + new Date().toISOString() + '.' + encoding;
+    link.innerHTML = "<button id='save-btn' class='recorder__save--btn'>I'm Finished Recording ></button>";
 
     //add the new audio and a elements to the li element
-    li.appendChild(au);
-    li.appendChild(deleteButton);
-    li.appendChild(link);
+    // li.appendChild(au);
+    // li.appendChild(deleteButton);
+    // li.appendChild(link);
+
 
     //add the li element to the ordered list
-    recordingsList.appendChild(li);
+    recordingsList.appendChild(au);
+    saveDiv.appendChild(link);
     recordButton.disabled = true;
     deleteButton.onclick = function(e) {
         resetTimer();
         recordButton.disabled = false;
-        let evtTgt = e.target;
-        evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
+        recordButton.style.backgroundColor = "#ff4040";
+        micSVG.style.fill = "#fff";
+        saveDiv.removeChild(link);
+        recordingsList.removeChild(au);
     }
 }
 
