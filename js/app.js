@@ -13,13 +13,13 @@ var recorder; //WebAudioRecorder object
 var input; //MediaStreamAudioSourceNode  we'll be recording
 var encodingType; //holds selected encoding for resulting audio (file)
 var encodeAfterRecord = true; // when to encode
-const canvas = document.querySelector('.visualizer');
+//const canvas = document.querySelector('.visualizer');
 
 // shim for AudioContext when it's not avb. 
 var AudioContext = window.AudioContext || window.webkitAudioContext;
 var audioContext; //new audio context to help us record
 
-var encodingTypeSelect = document.getElementById("encodingTypeSelect");
+//var encodingTypeSelect = document.getElementById("encodingTypeSelect");
 var recordButton = document.getElementById("recordButton");
 var stopButton = document.getElementById("stopButton");
 var deleteButton = document.getElementById('deleteButton');
@@ -172,7 +172,7 @@ function createDownloadLink(blob, encoding) {
     //link the a element to the blob
     link.href = url;
     link.download = 'Vault of Us Recording_' + new Date().toISOString() + '.' + encoding;
-    link.innerHTML = "<button id='save-btn' class='recorder__save--btn'>I'm Finished Recording ></button>";
+    link.innerHTML = "<button id='save-btn' class='recorder__save--btn'>Save Audio</button>";
 
     //add the new audio and a elements to the li element
     // li.appendChild(au);

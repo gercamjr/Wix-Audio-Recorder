@@ -87,7 +87,11 @@ i {
     margin-top: 1.5rem;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    /* gap: 20px; */
+}
+
+.recorder__controls>*+* {
+    margin-left: 20px;
 }
 
 .recorder__controls--record,
