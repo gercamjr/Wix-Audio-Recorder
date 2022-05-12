@@ -13,7 +13,6 @@ h6 {
 }
 
 body {
-    
     word-wrap: break-word;
     overflow-wrap: break-word;
     color: black;
@@ -107,7 +106,6 @@ button:disabled {
 }
 
 audio {
-    
     width: 80%;
     margin-top: 0.2rem;
 }
@@ -130,7 +128,6 @@ audio {
 
 #save-btn {
     width: 80%;
-
     margin: 0 auto;
     margin-top: 10px;
     background-color: #708198;
@@ -138,9 +135,7 @@ audio {
 
 .deleteBtn {
     width: 80%;
-
     margin: 0 auto;
-    
     background-color: #67605f;
     color: #fff;
 }

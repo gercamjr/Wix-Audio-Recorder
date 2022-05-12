@@ -140,6 +140,12 @@ function createDownloadLink(blob, encoding) {
 
     deleteButton.innerHTML = "Delete";
 
+
+    const saveButton = document.createElement('button')
+    saveButton.classList.add('btn')
+    saveButton.setAttribute('id', 'save-btn')
+    saveButton.innerHTML = 'Save Audio'
+
     //add controls to the <audio> element
     au.controls = true;
     au.src = url;
@@ -152,10 +158,26 @@ function createDownloadLink(blob, encoding) {
     //add the new audio and a elements to the li element
     li.appendChild(au);
     li.appendChild(deleteButton);
-    li.appendChild(link);
+    li.appendChild(saveButton);
 
     //add the li element to the ordered list
     recordingsList.appendChild(li);
+    saveButton.onclick = function(e) {
+        const formData = new FormData();
+        formData.append('audio',blob);
+        formData.append('name', 'Vault of Us Recording_' + new Date().toISOString() + '.' + encoding)
+                
+        fetch('/saveAudio.php', {
+            method: 'POST',
+            body: formData
+            
+        }).then(response => {
+            return response.text().then(function(text) {
+                alert(text + ' was saved successfully!')
+            })
+        })
+        .catch(err => alert(err))
+    }
     recordButton.disabled = true;
     deleteButton.onclick = function(e) {
         resetTimer();
