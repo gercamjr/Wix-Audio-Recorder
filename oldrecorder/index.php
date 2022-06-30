@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Audio Recording Demo With WebAudioRecorder.js - addpipe.com</title>
+    <title>Vault of Us MP3 Recorder</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Latest compiled and minified Bootstrap CSS -->

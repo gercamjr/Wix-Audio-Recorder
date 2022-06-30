@@ -1,7 +1,0 @@
-{
-  "devDependencies": {
-    "browser-sync": "^2.27.9",
-    "gulp": "^4.0.2",
-    "gulp-connect-php": "^1.0.3"
-  }
-}

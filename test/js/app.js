@@ -195,20 +195,15 @@ function createDownloadLink(blob, encoding) {
         const formData = new FormData();
         formData.append('audio',blob);
         formData.append('name', 'Vault of Us Recording_' + new Date().toISOString() + '.' + encoding)
-        e.target.style.backgroundColor = 'gray'
-        e.target.innerHTML = 'Saving...'
+                
         fetch('/saveAudio.php', {
             method: 'POST',
             body: formData
             
         }).then(response => {
-            e.target.innerHTML = 'Saved!'
-            e.target.style.backgroundColor = '#ffd677'
-            
             return response.text().then(function(text) {
                 alert(text + ' was saved successfully!')
             })
-            
         })
         .catch(err => alert(err))
     }

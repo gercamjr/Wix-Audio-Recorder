@@ -54,6 +54,10 @@
     color: #fff;
 }
 
+.fa-save {
+    font-size: 35px;
+}
+
 i {
     vertical-align: middle;
 }
@@ -97,7 +101,8 @@ i {
 
 .recorder__controls--record,
 .recorder__controls--stop,
-.recorder__controls--redo {
+.recorder__controls--redo,
+.recorder__save {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -274,19 +279,10 @@ input[type="range"]:active::-ms-thumb {
 
 /* save button */
 
-.recorder__save {
-    margin-bottom: 1rem;
-    height: 40px;
-}
-
 .recorder__save--btn {
-    background-color: #fff;
-    width: 200px;
-    border: none;
-    border-radius: 25px;
-    padding: .75rem .35rem;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
 }
 
 
