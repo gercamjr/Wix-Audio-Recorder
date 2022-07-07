@@ -160,6 +160,7 @@ function createDownloadLink(blob, encoding) {
     //var li = document.createElement('div')
     
     const saveDiv = document.getElementById('saveAudio');
+    const saveButton = document.getElementById('saveButton')
     // deleteButton.classList.add('btn');
     // deleteButton.classList.add('deleteBtn');
 
@@ -173,10 +174,7 @@ function createDownloadLink(blob, encoding) {
     //link the a element to the blob
     // link.href = url;
 
-    const saveButton = document.createElement('button')
-    saveButton.classList.add('recorder__save--btn')
-    saveButton.setAttribute('id', 'save-btn')
-    saveButton.innerHTML = 'Save Audio'
+    
     //link.download = 'Vault of Us Recording_' + new Date().toISOString() + '.mp3';
     //link.innerHTML = "<button id='save-btn' class='recorder__save--btn'>Save Audio</button>";
 
@@ -188,22 +186,23 @@ function createDownloadLink(blob, encoding) {
 
     //add the li element to the ordered list
     recordingsList.appendChild(au);
-    saveDiv.appendChild(saveButton);
+    
     recordButton.disabled = true;
 
     saveButton.onclick = function(e) {
         const formData = new FormData();
         formData.append('audio',blob);
         formData.append('name', 'Vault of Us Recording_' + new Date().toISOString() + '.' + encoding)
-        e.target.style.backgroundColor = 'gray'
-        e.target.innerHTML = 'Saving...'
+        const saveText = document.querySelector('.text__save')
+        saveButton.style.backgroundColor = 'gray'
+        saveText.innerHTML = 'Saving...'
         fetch('/saveAudio.php', {
             method: 'POST',
             body: formData
             
         }).then(response => {
-            e.target.innerHTML = 'Saved!'
-            e.target.style.backgroundColor = '#ffd677'
+            saveText.innerHTML = 'Saved!'
+            saveButton.style.backgroundColor = '#ffd677'
             
             return response.text().then(function(text) {
                 alert(text + ' was saved successfully!')
