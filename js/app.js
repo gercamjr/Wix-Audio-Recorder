@@ -25,6 +25,9 @@ var stopButton = document.getElementById("stopButton");
 var deleteButton = document.getElementById('deleteButton');
 const micSVG = document.getElementById("micIcon");
 
+const recordingsList = document.getElementById('recordingsList')
+const saveButtonWrapper = document.querySelector('.recorder__controls--save')
+
 
 //add events to those 2 buttons
 recordButton.addEventListener("click", startRecording);
@@ -136,7 +139,9 @@ function stopRecording() {
     gumStream.getAudioTracks()[0].stop();
     
     deleteButton.disabled = false;
-
+    saveButtonWrapper.style.display = 'flex'
+    saveButtonWrapper.style.flexDirection = 'column'
+    saveButtonWrapper.style.alignItems = 'center'
     //disable the stop button
     stopButton.disabled = true;
     recordButton.disabled = false;
@@ -145,7 +150,7 @@ function stopRecording() {
     stopButton.style.backgroundColor = "#000";
     stopButton.style.color = "#fff"
     recordButton.style.backgroundColor = "#ff4040";
-        micSVG.style.fill = "#fff";
+    micSVG.style.fill = "#fff";
 
     //tell the recorder to finish the recording (stop recording + encode the recorded audio)
     recorder.finishRecording();
@@ -203,26 +208,30 @@ function createDownloadLink(blob, encoding) {
         }).then(response => {
             saveText.innerHTML = 'Saved!'
             saveButton.style.backgroundColor = '#ffd677'
-            
+            deleteButton.parentElement.style.display = 'none'
             return response.text().then(function(text) {
                 alert(text + ' was saved successfully!')
             })
             
         })
         .catch(err => alert(err))
+
+
+        
     }
 
-    deleteButton.onclick = function(e) {
-        resetTimer();
-        recordButton.disabled = false;
-        recordButton.style.backgroundColor = "#ff4040";
-        micSVG.style.fill = "#fff";
-        saveDiv.removeChild(saveButton);
-        recordingsList.removeChild(au);
-    }
 }
 
 
+deleteButton.onclick = function(e) {
+    resetTimer();
+    recordButton.disabled = false;
+    saveButtonWrapper.style.display = 'none'
+    recordButton.style.backgroundColor = "#ff4040";
+    micSVG.style.fill = "#fff";
+    
+    document.getElementById('recordingsList').removeChild(document.querySelector('audio'))
+}
 
 
 function startTimer() {

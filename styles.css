@@ -97,11 +97,14 @@ i {
 
 .recorder__controls--record,
 .recorder__controls--stop,
-.recorder__controls--redo,
-.recorder__controls--save {
+.recorder__controls--redo {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.recorder__controls--save {
+    display: none;
 }
 
 .btn {

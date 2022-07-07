@@ -29,14 +29,11 @@
     <![endif]-->
 
     <div class="recorder">
-        <div id="stopwatch" class="row recorder__stopwatch">
-
-        </div>
+        <div id="stopwatch" class="row recorder__stopwatch"></div>
         <div class="row recorder__controls">
             <div class="recorder__controls--record">
                 <p class="recorder__controls--text text__record">RECORD</p>
                 <button class="recorder__controls--record--btn btn" id="recordButton">
-           
             <svg
               version="1.1"
               id="micIcon"
@@ -66,10 +63,17 @@
             <div class="recorder__controls--stop">
                 <p class="recorder__controls--text text__stop">STOP</p>
                 <button class="recorder__controls--stop--btn btn" id="stopButton">
-                    <span class="fa-stack square">
-                      <i class="far fa-square fa-stack-2x"></i>
-                      <i class="fas fa-square fa-stack-1x"></i>
-                    </span>
+            <span class="fa-stack square">
+              <i class="far fa-square fa-stack-2x"></i>
+              <i class="fas fa-square fa-stack-1x"></i>
+            </span>
+          </button>
+            </div>
+
+            <div class="recorder__controls--save">
+                <p class="recorder__controls--text text__save">SAVE AUDIO</p>
+                <button class="recorder__controls--save--btn btn" id="saveButton">
+            <i class="fas fa-save"></i>
           </button>
             </div>
             <div class="recorder__controls--redo">
@@ -78,20 +82,9 @@
             <i class="fas fa-redo"></i>
           </button>
             </div>
-            <div class="recorder__controls--save">
-                <p class="recorder__controls--text text__save">SAVE AUDIO</p>
-                <button class="recorder__controls--save--btn btn" id="saveButton">
-          <i class="fas fa-save"></i>
-        </button>
-            </div>
-
         </div>
-        <div class="row recorder__player" id="recordingsList">
-
-        </div>
-        <div class="row recorder__save" id="saveAudio">
-
-        </div>
+        <div class="row recorder__player" id="recordingsList"></div>
+        <div class="row recorder__save" id="saveAudio"></div>
     </div>
 
     <script src="js/WebAudioRecorder.min.js"></script>
