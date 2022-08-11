@@ -145,12 +145,19 @@ function stopRecording() {
     //disable the stop button
     stopButton.disabled = true;
     recordButton.disabled = false;
+    
     recordButton.style.cursor = "pointer";
     stopButton.style.cursor = "not-allowed";
     stopButton.style.backgroundColor = "#000";
     stopButton.style.color = "#fff"
     recordButton.style.backgroundColor = "#ff4040";
     micSVG.style.fill = "#fff";
+    recordButton.style.display = "none"
+    stopButton.style.display = 'none'
+    document.querySelector('.text__record').style.display = 'none'
+    document.querySelector('.text__stop').style.display = 'none'
+    document.querySelector('.text__redo').style.display = 'block'
+    deleteButton.style.display = "block"
 
     //tell the recorder to finish the recording (stop recording + encode the recorded audio)
     recorder.finishRecording();
@@ -166,6 +173,9 @@ function createDownloadLink(blob, encoding) {
     
     const saveDiv = document.getElementById('saveAudio');
     const saveButton = document.getElementById('saveButton')
+
+    const audioURL =  document.getElementById('audioURL')
+                const copyButton = document.getElementById('copyButton')
     // deleteButton.classList.add('btn');
     // deleteButton.classList.add('deleteBtn');
 
@@ -210,7 +220,14 @@ function createDownloadLink(blob, encoding) {
             saveButton.style.backgroundColor = '#ffd677'
             deleteButton.parentElement.style.display = 'none'
             return response.text().then(function(text) {
-                alert(text + ' was saved successfully!')
+                
+                document.querySelector('div.recorder').style.display = 'none'
+            
+                audioURL.textContent = text
+
+                document.querySelector('.the__end').style.display = 'flex'
+
+                
             })
             
         })
@@ -224,12 +241,24 @@ function createDownloadLink(blob, encoding) {
 
 
 deleteButton.onclick = function(e) {
+    const audioURL =  document.getElementById('audioURL')
+    const copyButton = document.getElementById('copyButton')
+
+
     resetTimer();
     recordButton.disabled = false;
     saveButtonWrapper.style.display = 'none'
     recordButton.style.backgroundColor = "#ff4040";
     micSVG.style.fill = "#fff";
-    
+    deleteButton.style.display = 'none'
+    document.querySelector('.text__stop').style.display = 'block'
+    document.querySelector('.text__record').style.display = 'block'
+    document.querySelector('.text__redo').style.display = 'none'
+
+    audioURL.style.display = 'none'
+    copyButton.style.display = 'none'
+    recordButton.style.display = 'block'
+    stopButton.style.display = 'block'
     document.getElementById('recordingsList').removeChild(document.querySelector('audio'))
 }
 

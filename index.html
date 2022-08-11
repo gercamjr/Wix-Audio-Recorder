@@ -71,9 +71,9 @@
             </div>
 
             <div class="recorder__controls--save">
-                <p class="recorder__controls--text text__save">SAVE AUDIO</p>
+                <p class="recorder__controls--text text__save">IM DONE</p>
                 <button class="recorder__controls--save--btn btn" id="saveButton">
-            <i class="fas fa-save"></i>
+                  <i class="fas fa-check"></i>
           </button>
             </div>
             <div class="recorder__controls--redo">
@@ -84,11 +84,34 @@
             </div>
         </div>
         <div class="row recorder__player" id="recordingsList"></div>
-        <div class="row recorder__save" id="saveAudio"></div>
+        <div class="row recorder__save" id="saveAudio">
+
+        </div>
+    </div>
+
+    <div class="the__end">
+        <h4>Click to Copy your audio link</h3>
+            <h4>Then paste below</h4>
+
+            <p id="audioURL" class="row"></p>
+            <button id="copyButton" class="row" onclick="copyURL()">Copy URL</button>
+            <img src="red-arrow-down.png" width="50px" alt="red arrow pointing down" class="download__arrow" />
     </div>
 
     <script src="js/WebAudioRecorder.min.js"></script>
     <script src="js/app.js"></script>
+    <script>
+        function copyURL() {
+            /*get the text field*/
+            const copyText = document.getElementById('audioURL')
+                // copyText.select()
+                // copyText.setSlectionRange(0, 99999)
+
+            navigator.clipboard.writeText(copyText.textContent)
+
+            document.querySelector('.the__end button').textContent = 'Copied!'
+        }
+    </script>
 </body>
 
 </html>

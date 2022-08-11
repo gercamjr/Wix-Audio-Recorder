@@ -139,6 +139,11 @@ i {
 
 .recorder__controls--redo--btn {
     background-color: #000;
+    display: none;
+}
+
+.text__redo {
+    display: none;
 }
 
 .recorder__controls--save--btn {
@@ -294,4 +299,17 @@ input[type="range"]:active::-ms-thumb {
 .recorder__redo--btn {
     background-color: transparent;
     border: none;
+}
+
+
+/* copy button */
+
+.the__end {
+    width: 330px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
+    align-items: center;
+    row-gap: 10px;
 }

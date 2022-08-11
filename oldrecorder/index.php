@@ -36,8 +36,8 @@
     </div>
 
     <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
-    <script src="js/WebAudioRecorder.min.js"></script>
-    <script src="js/app.js"></script>
+    <script src="oldrecorder/js/WebAudioRecorder.min.js"></script>
+    <script src="oldrecorder/js/app.js"></script>
 
 </body>
 
