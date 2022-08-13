@@ -313,3 +313,8 @@ input[type="range"]:active::-ms-thumb {
     align-items: center;
     row-gap: 10px;
 }
+
+#audioURL {
+    text-align: center;
+    color: red;
+}
