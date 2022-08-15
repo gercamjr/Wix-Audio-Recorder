@@ -175,7 +175,7 @@ function createDownloadLink(blob, encoding) {
     const saveButton = document.getElementById('saveButton')
 
     const audioURL =  document.getElementById('audioURL')
-                const copyButton = document.getElementById('copyButton')
+                
     // deleteButton.classList.add('btn');
     // deleteButton.classList.add('deleteBtn');
 
@@ -207,7 +207,7 @@ function createDownloadLink(blob, encoding) {
     saveButton.onclick = function(e) {
         const formData = new FormData();
         formData.append('audio',blob);
-        formData.append('name', 'Vault of Us Recording_' + new Date().toISOString() + '.' + encoding)
+        formData.append('name', new Date().toISOString() + '.' + encoding)
         const saveText = document.querySelector('.text__save')
         saveButton.style.backgroundColor = 'gray'
         saveText.innerHTML = 'Saving...'
@@ -241,8 +241,7 @@ function createDownloadLink(blob, encoding) {
 
 
 deleteButton.onclick = function(e) {
-    const audioURL =  document.getElementById('audioURL')
-    const copyButton = document.getElementById('copyButton')
+    
 
 
     resetTimer();
@@ -250,15 +249,15 @@ deleteButton.onclick = function(e) {
     saveButtonWrapper.style.display = 'none'
     recordButton.style.backgroundColor = "#ff4040";
     micSVG.style.fill = "#fff";
-    deleteButton.style.display = 'none'
+    
     document.querySelector('.text__stop').style.display = 'block'
     document.querySelector('.text__record').style.display = 'block'
     document.querySelector('.text__redo').style.display = 'none'
 
-    audioURL.style.display = 'none'
-    copyButton.style.display = 'none'
+    
     recordButton.style.display = 'block'
     stopButton.style.display = 'block'
+    deleteButton.style.display = 'none'
     document.getElementById('recordingsList').removeChild(document.querySelector('audio'))
 }
 

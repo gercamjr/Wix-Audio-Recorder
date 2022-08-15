@@ -90,28 +90,16 @@
     </div>
 
     <div class="the__end">
-        <h4>Click to Copy your audio link</h3>
-            <h4>Then paste below</h4>
+        <p>Copy and paste your audio link in the box below</p>
 
-            <p id="audioURL" class="row"></p>
-            <button id="copyButton" class="row" onclick="copyURL()">Copy Audio Link</button>
-            <img src="red-arrow-down.png" width="50px" alt="red arrow pointing down" class="download__arrow" />
+        <p id="audioURL" class="row"></p>
+
+
     </div>
 
     <script src="js/WebAudioRecorder.min.js"></script>
     <script src="js/app.js"></script>
-    <script>
-        function copyURL() {
-            /*get the text field*/
-            const copyText = document.getElementById('audioURL')
-                // copyText.select()
-                // copyText.setSlectionRange(0, 99999)
 
-            navigator.clipboard.writeText(copyText.textContent)
-
-            document.querySelector('.the__end button').textContent = 'Copied!'
-        }
-    </script>
 </body>
 
 </html>
